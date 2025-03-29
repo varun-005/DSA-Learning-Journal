@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DSA Learning Journal</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 
@@ -15,8 +15,13 @@
                 href="/logout">Logout</a>
         </div>
         <div class="flex items-start gap-3 bg-zinc-800/50 p-5 rounded-lg backdrop-blur-sm">
-            <div class="w-16 h-16 bg-red-500 rounded-full overflow-hidden">
-                <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="">
+            <div
+                class="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-blue-500 text-xl font-bold">
+                <% if (user.profilepic && user.profilepic !=='defaultuser.jpg' ) { %>
+                    <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="">
+                    <% } else { %>
+                        <%= user.name.charAt(0).toUpperCase() %>
+                            <% } %>
             </div>
             <div>
                 <h3 class="text-3xl"><span class="font-light text-zinc-400">Welcome back,</span>
@@ -28,33 +33,95 @@
         </div>
 
         <div class="mt-10">
-            <h5 class="mb-5 text-xl font-light">Create a new post</h5>
+            <h5 class="mb-5 text-xl font-light">DSA Learning Journal</h5>
             <form method="POST" action="/post">
-                <textarea placeholder="What's on your mind?"
-                    class="block p-4 outline-none w-1/3 resize-none bg-zinc-800/50 border-2 border-zinc-700 rounded-lg backdrop-blur-sm"
-                    name="content"></textarea>
-                <input class="px-4 py-2 text-sm bg-blue-500 hover:bg-blue-600 transition-colors block rounded-md mt-3"
-                    type="submit" value="Create new post">
+                <div class="grid grid-cols-2 gap-3 w-1/3 mb-3">
+                    <select name="type" class="px-3 py-2 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg">
+                        <option value="concept">Concept/Theory</option>
+                        <option value="code">Code Template</option>
+                        <option value="mistake">Common Mistake</option>
+                        <option value="solution">Problem Solution</option>
+                    </select>
+                    <select name="topic" class="px-3 py-2 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg">
+                        <option value="arrays">Arrays</option>
+                        <option value="strings">Strings</option>
+                        <option value="linkedlist">Linked List</option>
+                        <option value="trees">Trees</option>
+                        <option value="recursion">Recursion</option>
+                        <option value="dp">Dynamic Programming</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <select name="platform" class="px-3 py-2 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg">
+                        <option value="leetcode">LeetCode</option>
+                        <option value="gfg">GeeksForGeeks</option>
+                        <option value="hackerrank">HackerRank</option>
+                        <option value="codechef">CodeChef</option>
+                        <option value="codeforces">CodeForces</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <select name="difficulty" class="px-3 py-2 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <input type="text" name="title" placeholder="Problem/Concept Title" required
+                    class="block w-1/3 mb-3 px-3 py-2 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg">
+                <textarea name="content" placeholder="Your notes, code, or learnings..." required
+                    class="block w-1/3 h-40 p-3 bg-zinc-800/50 border-2 border-zinc-700 rounded-lg"></textarea>
+                <button class="px-4 py-2 mt-3 bg-blue-500 rounded-md hover:bg-blue-600">Save Entry</button>
             </form>
         </div>
-        <div class="postcontainer mt-8">
+        <div class="mt-8 grid gap-4">
+            <div class="mb-4">
+                <h3 class="text-xl mb-2">Quick Stats</h3>
+                <div class="flex flex-wrap gap-4 mb-4">
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">Total Problems: <%= user.posts.filter(p=> p.type
+                            === 'solution').length %></span>
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">LeetCode: <%= user.posts.filter(p=> p.platform ===
+                            'leetcode').length %></span>
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">CodeChef: <%= user.posts.filter(p=> p.platform ===
+                            'codechef').length %></span>
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">CodeForces: <%= user.posts.filter(p=> p.platform
+                            === 'codeforces').length %></span>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">Concepts: <%= user.posts.filter(p=> p.type ===
+                            'concept').length %></span>
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">Templates: <%= user.posts.filter(p=> p.type ===
+                            'code').length %></span>
+                    <span class="px-3 py-1 bg-zinc-800/50 rounded-md">Common Mistakes: <%= user.posts.filter(p=> p.type
+                            === 'mistake').length %></span>
+                </div>
+            </div>
             <% user.posts.reverse().forEach(function(post) { %>
-                <div
-                    class="post w-1/3 p-5 mb-4 rounded-lg border-[1px] border-zinc-700/50 bg-zinc-800/50 backdrop-blur-sm hover:bg-zinc-800/70 transition-colors">
-                    <h4 class="text-blue-500 mb-2">
-                        <%= user.username %>
-                    </h4>
-                    <p class="text-sm tracking-tight">
+                <div class="w-1/3 p-5 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                    <div class="flex justify-between mb-3">
+                        <div class="flex gap-2">
+                            <span class="text-sm px-2 py-1 bg-blue-500/20 rounded-full">
+                                <%= post.type %>
+                            </span>
+                            <span class="text-sm px-2 py-1 bg-green-500/20 text-green-300 rounded-full">
+                                <%= post.platform %>
+                            </span>
+                            <span class="text-sm px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-full">
+                                <%= post.topic %>
+                            </span>
+                        </div>
+                        <span class="text-sm text-zinc-400">
+                            <%= post.formattedDate %>
+                        </span>
+                    </div>
+                    <h3 class="font-medium mb-2">
+                        <%= post.title %>
+                    </h3>
+                    <p class="text-sm text-zinc-300 mb-3">
                         <%= post.content %>
                     </p>
-                    <small class="mt-2 inline-block">
-                        <%= post.likes.length %> likes
-                    </small>
-                    <div class="btns flex gap-4 mt-1">
-                        <a class="text-blue-500" href="/like/<%= post._id %>">
-                            <%= post.likes.indexOf(user._id)===-1 ? "Like" : "Unlike" %>
-                        </a>
-                        <a class="text-zinc-600" href="/edit/<%=post._id %>">edit</a>
+                    <div class="flex gap-3">
+                        <a href="/edit/<%= post._id %>" class="text-sm text-blue-400 hover:text-blue-300">Edit</a>
+                        <a href="/delete/<%= post._id %>" class="text-sm text-red-400 hover:text-red-300"
+                            onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
                     </div>
                 </div>
                 <% }) %>

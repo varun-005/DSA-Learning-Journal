@@ -1,48 +1,28 @@
-# PostPro
+# DSA Learning Journal
 
-A simple social media application where users can create posts and interact with others.
+Track your Data Structures & Algorithms learning journey with an easy-to-use journal application.
 
-## Features
+## Key Features
 
-- User authentication with JWT
-- Create, edit and delete posts
-- Like/Unlike posts
-- Profile picture management
-- Responsive UI with TailwindCSS
+- Track DSA problems from different platforms (LeetCode, CodeForces, CodeChef)
+- Organize by topics (Arrays, LinkedList, Trees, DP, etc.)
+- Save code templates and common mistakes
+- Track problem difficulty and solutions
+- Quick stats dashboard
 
-## Setup
-
-1. Install dependencies
+## Quick Start
 
 ```bash
+# Install dependencies
 npm install
-```
 
-2. Create uploads directory for profile pictures
-
-```bash
-mkdir -p public/images/uploads
-```
-
-3. Add default profile picture
-
-```bash
-node scripts/createDefaultImage.js
-```
-
-4. Start MongoDB server
-
-5. Run the application
-
-```bash
+# Start the application
 npm run dev
 ```
 
-## Tech Stack
+## Built With
 
 - Node.js & Express
-- MongoDB with Mongoose
-- EJS templates
+- MongoDB Atlas
+- JWT Authentication
 - TailwindCSS
-- JWT for authentication
-- Multer for file uploads

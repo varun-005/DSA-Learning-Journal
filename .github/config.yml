@@ -1,0 +1,7 @@
+repository:
+  name: dsa-learning-journal
+  description: A web application for tracking DSA learning progress
+  private: false
+  has_issues: true
+  has_projects: true
+  has_wiki: false
