@@ -1,0 +1,4 @@
+node_modules/
+public/images/uploads/*
+!public/images/uploads/defaultuser.jpg
+.env
